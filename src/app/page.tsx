@@ -5,8 +5,10 @@ import io from 'socket.io-client';
 import { useRef } from 'react';
 
 const SOCKET_URL = typeof window !== 'undefined' 
-  ? process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001'
-  : 'http://localhost:3001';
+  ? window.location.hostname === 'localhost' 
+    ? 'http://localhost:3001' 
+    : 'http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com:3001'
+  : 'http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com:3001';
 
 export default function Home() {
   const [socket, setSocket] = useState<any>(null);

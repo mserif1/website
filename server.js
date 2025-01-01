@@ -4,8 +4,9 @@ const { createServer } = require('http');
 const httpServer = createServer();
 const io = new Server(httpServer, {
     cors: {
-        origin: "*",
-        methods: ["GET", "POST"]
+        origin: ["http://localhost:3000", "http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com", "http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com:3000"],
+        methods: ["GET", "POST"],
+        credentials: true
     }
 });
 
