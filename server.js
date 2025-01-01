@@ -1,10 +1,17 @@
 const { Server } = require('socket.io');
-const { createServer } = require('http');
+const https = require('https');
+const fs = require('fs');
 
-const httpServer = createServer();
-const io = new Server(httpServer, {
+// SSL sertifikası ve key dosyalarını okuyoruz
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/chat.mserifozturk.online/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/chat.mserifozturk.online/fullchain.pem')
+};
+
+const httpsServer = https.createServer(options);
+const io = new Server(httpsServer, {
     cors: {
-        origin: ["http://localhost:3000", "http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com", "http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com:3000"],
+        origin: ["https://localhost:3000", "https://chat.mserifozturk.online", "https://chat.mserifozturk.online:3000"],
         methods: ["GET", "POST"],
         credentials: true
     }
@@ -44,6 +51,6 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 3001;
 const HOST = '0.0.0.0';
 
-httpServer.listen(PORT, HOST, () => {
-    console.log(`Socket.IO sunucusu ${HOST}:${PORT} üzerinde çalışıyor`);
-}); 
+httpsServer.listen(PORT, HOST, () => {
+    console.log(`Güvenli Socket.IO sunucusu ${HOST}:${PORT} üzerinde çalışıyor`);
+});

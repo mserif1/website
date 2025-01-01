@@ -6,9 +6,9 @@ import { useRef } from 'react';
 
 const SOCKET_URL = typeof window !== 'undefined' 
   ? window.location.hostname === 'localhost' 
-    ? 'http://localhost:3001' 
-    : 'http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com:3001'
-  : 'http://ec2-16-171-111-202.eu-north-1.compute.amazonaws.com:3001';
+    ? 'https://localhost:3001' 
+    : 'wss://chat.mserifozturk.online:3001'
+  : 'wss://chat.mserifozturk.online:3001';
 
 export default function Home() {
   const [socket, setSocket] = useState<any>(null);
